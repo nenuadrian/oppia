@@ -28,20 +28,20 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import {downgradeComponent} from '@angular/upgrade/static';
-import {InteractionAnswer, MusicNotesAnswer} from 'interactions/answer-defs';
+import { downgradeComponent } from '@angular/upgrade/static';
+import { InteractionAnswer, MusicNotesAnswer } from 'interactions/answer-defs';
 import {
   MusicNotesInputCustomizationArgs,
   ReadableMusicNote,
 } from 'interactions/customization-args-defs';
-import {InteractionAttributesExtractorService} from 'interactions/interaction-attributes-extractor.service';
-import {InteractionsExtensionsConstants} from 'interactions/interactions-extension.constants';
-import {CurrentInteractionService} from 'pages/exploration-player-page/services/current-interaction.service';
-import {PlayerPositionService} from 'pages/exploration-player-page/services/player-position.service';
-import {Subscription} from 'rxjs';
-import {AlertsService} from 'services/alerts.service';
-import {MusicNotesInputRulesService} from './music-notes-input-rules.service';
-import {MusicPhrasePlayerService} from './music-phrase-player.service';
+import { InteractionAttributesExtractorService } from 'interactions/interaction-attributes-extractor.service';
+import { InteractionsExtensionsConstants } from 'interactions/interactions-extension.constants';
+import { CurrentInteractionService } from 'pages/exploration-player-page/services/current-interaction.service';
+import { PlayerPositionService } from 'pages/exploration-player-page/services/player-position.service';
+import { Subscription } from 'rxjs';
+import { AlertsService } from 'services/alerts.service';
+import { MusicNotesInputRulesService } from './music-notes-input-rules.service';
+import { MusicPhrasePlayerService } from './music-phrase-player.service';
 
 interface MusicNote {
   baseNoteMidiNumber: number;
@@ -66,8 +66,7 @@ interface Sequence {
   templateUrl: './music-notes-input-interaction.component.html',
 })
 export class MusicNotesInputComponent
-  implements OnInit, OnDestroy, AfterViewInit
-{
+  implements OnInit, OnDestroy, AfterViewInit {
   // These properties are initialized using Angular lifecycle hooks
   // and we need to do non-null assertion. For more information, see
   // https://github.com/oppia/oppia/wiki/Guide-on-defining-types#ts-7-1
@@ -111,7 +110,7 @@ export class MusicNotesInputComponent
     private musicPhrasePlayerService: MusicPhrasePlayerService,
     private alertsService: AlertsService,
     private elementRef: ElementRef
-  ) {}
+  ) { }
 
   private _getAttributes() {
     return {
@@ -121,7 +120,7 @@ export class MusicNotesInputComponent
   }
 
   ngOnInit(): void {
-    const {sequenceToGuess, initialSequence} =
+    const { sequenceToGuess, initialSequence } =
       this.interactionAttributesExtractorService.getValuesFromAttributes(
         'MusicNotesInput',
         this._getAttributes()
@@ -212,9 +211,11 @@ export class MusicNotesInputComponent
   // must be recalculated in order for the grid to work properly.
   // TODO(#14340): Remove some usages of jQuery from the codebase.
   reinitStaff(): void {
-    $('.oppia-music-input-valid-note-area').css('visibility', 'hidden');
+    console.log('test');
+    const noteArea = document.getElementsByClassName('oppia-music-input-valid-note-area')[0];
+    noteArea.style.visibility = 'hidden';
     setTimeout(() => {
-      $('.oppia-music-input-valid-note-area').css('visibility', 'visible');
+      noteArea.style.visibility = 'visible';
       this.init();
     }, 20);
   }
@@ -244,7 +245,7 @@ export class MusicNotesInputComponent
   // start of the exploration and can be removed by the learner.
   initializeNoteSequence(initialNotesToAdd: Sequence): void {
     for (let i = 0; i < initialNotesToAdd.value.length; i++) {
-      let {baseNoteMidiNumber, offset} = this._convertReadableNoteToNote(
+      let { baseNoteMidiNumber, offset } = this._convertReadableNoteToNote(
         initialNotesToAdd.value[i]
       );
       let initialNote = {
@@ -388,7 +389,7 @@ export class MusicNotesInputComponent
     for (let i = 0; i < this.noteSequence.length; i++) {
       var innerDiv = $(
         '<div class="oppia-music-input-natural-note' +
-          ' oppia-music-input-on-staff"></div>'
+        ' oppia-music-input-on-staff"></div>'
       )
         .data('noteType', this.NOTE_TYPE_NATURAL)
         .data('noteId', this.noteSequence[i].note.noteId)
@@ -591,7 +592,7 @@ export class MusicNotesInputComponent
   // When compareNoteStarts(a, b) returns 0, a is equal to b.
   // When compareNoteStarts(a, b) returns greater than 0, a is greater
   //   than b.
-  compareNoteStarts(a: {note: MusicNote}, b: {note: MusicNote}): number {
+  compareNoteStarts(a: { note: MusicNote }, b: { note: MusicNote }): number {
     if (a.note.noteStart && b.note.noteStart) {
       return (
         (a.note.noteStart.num * b.note.noteStart.den -
@@ -700,7 +701,7 @@ export class MusicNotesInputComponent
   drawLedgerLine(topPos: number, leftPos: number): void {
     var ledgerLineDiv = $(
       '<div class"oppia-music-input-ledger-line ' +
-        'oppia-music-input-natural-note"></div>'
+      'oppia-music-input-natural-note"></div>'
     )
       .droppable({
         accept: '.oppia-music-input-note-choices div',
@@ -810,7 +811,7 @@ export class MusicNotesInputComponent
       return {
         baseNoteMidiNumber:
           this.NOTE_NAMES_TO_MIDI_VALUES[
-            readableNoteName[0] + readableNoteName[2]
+          readableNoteName[0] + readableNoteName[2]
           ],
         offset: offset,
       };
